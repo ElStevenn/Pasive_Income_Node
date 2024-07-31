@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+requests
+aiohttp
+boto3
+pandas
+numpy
+sqlalchemy
+asyncpg
+python-dotenv
+docker
+openai
+bs4
+lxml

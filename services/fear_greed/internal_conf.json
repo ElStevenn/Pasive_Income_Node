@@ -1,0 +1,20 @@
+{
+    "description": "",
+    "status": "stopped",
+    "today_analysis": "",
+    "bot_id": "",
+    "levels": {
+        "1": {
+            "subscribers": [
+                "53f22083-76f4-43fd-ad6d-d35de69791ee",
+                "this_is_user_id"
+            ]
+        },
+        "2": {
+            "subscribers": []
+        },
+        "3": {
+            "subscribers": []
+        }
+    }
+}

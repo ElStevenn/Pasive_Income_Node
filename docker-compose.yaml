@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  weather-app:
+    image: my-application-image
+    ports:
+      - 8080:8080
+    networks:
+      - custom-isolated-network
+
+  db-pasive-income:
+    image: postgres
+    restart: always
+    ports:
+      - 5000:5000
+    environment:
+      POSTGRES_PASSWORD: mierda69
+    networks:
+      - custom-isolated-network
+    volumes:
+      - data_volume:/var/lib/postgresql/data
+
+volumes:
+  data_volume:
+
+networks:
+  custom-isolated-network:
