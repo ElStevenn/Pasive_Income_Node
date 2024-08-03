@@ -3,13 +3,13 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy.ext.asyncio import create_async_engine
 from .models import Base
-load_dotenv()
+load_dotenv(dotenv_path='/home/mrpau/Desktop/Secret_Project/other_layers/Pasive_Income_Node/.env')
 
 # Enviroment variables
-DB_NAME = os.getenv('DB_NAME')
+DB_NAME = 'main_db'
 DB_USER = os.getenv('DB_USER')
 DB_PASS = os.getenv('DB_PASS')
-DB_HOST = os.getenv('DB_HOST')
+DB_HOST = os.getenv('DB_HOST'); print(DB_HOST)
 
 # Database engine
 async_engine = create_async_engine(f'postgresql+asyncpg://{DB_USER}:{DB_PASS}@{DB_HOST}:5432/{DB_NAME}')

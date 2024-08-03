@@ -64,57 +64,6 @@ class Fear_Greed_Index:
                 return await response.json()
 
     @handle_conf_file
-    async def add_new_subscriber(self, conf, user_id: str, level: Literal["1", "2", "3"]):
-        """Add new subscriber into the conf list also dependig by its level"""
-        if level in conf['levels']:
-            if  user_id not in conf['levels'][level]['subscribers']:
-                conf['levels'][level]['subscribers'].append(user_id)
-                return True
-            else:
-                return None
-        else:
-            raise ValueError(f"Level {level} does not exist in the configuration.")
-
-    @handle_conf_file
-    async def delete_subscriber(self, conf, user_id: str):
-        """Delete a subscriver by its id only"""
-        try:
-            if user_id in conf['levels']['1']['subscribers']: 
-                conf['levels']['1']['subscribers'].remove(user_id)
-                return True
-            elif user_id in conf['levels']['2']['subscribers']:
-                conf['levels']['2']['subscribers'].remove(user_id)
-                return True
-            elif user_id in conf['levels']['3']['subscribers']:
-                conf['levels']['3']['subscribers'].remove(user_id)
-                return True
-            else:
-                return None
-        except ValueError:
-            raise ValueError(f"User ID {user_id} not found or any other error has happened")
-  
-
-    @handle_conf_file
-    async def get_users_list(self, conf, level: Literal["1", "2", "3", "*"] = "*"):
-        """Get all the users subscribed in a single list"""
-        if level != "*":
-            if level in conf['levels']:
-                result = list(conf['levels'][level]['subscribers'])
-                return result
-            else:
-                raise ValueError(f"Level {level} does not exist in the configuration.")
-        else:
-            result = {
-                "1": [],
-                "2": [],
-                "3": []
-            }
-            for lvl in ["1", "2", "3"]:
-                if lvl in conf['levels']:
-                    result[lvl] = np.array(conf['levels'][lvl]['subscribers'])
-            return result
-
-    @handle_conf_file
     async def conf_status(self, conf):
         return conf['status']
 

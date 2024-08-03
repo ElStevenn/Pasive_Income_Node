@@ -68,11 +68,11 @@ async def fear_greed_job():
         response1["headline"] = response1["headline"] + " - Notification with low importance" 
 
         # Get users with this subscription 1
-        users = await  fear_and_greed_service.get_users_list('1')
-        user_emails = await crud.get_email_by_ids(users)
+        user_emails = await crud.get_users_list('1')
         
         # Send emails to all user subscribed
-        asyncio.gather(*[send_email(user, response1["subject"], response1["headline"], response1["description"], ["https://alternative.me/crypto/fear-and-greed-index.png"]) for user in user_emails])
+        if user_emails:
+            asyncio.gather(*[send_email(user, response1["subject"], response1["headline"], response1["description"], ["https://alternative.me/crypto/fear-and-greed-index.png"]) for user in user_emails])
 
     # GROUP 2
     elif not notifications2:
@@ -88,8 +88,7 @@ async def fear_greed_job():
             response2["headline"] = response2["headline"] + f" - Notification with medium importance"  
 
             # Get user with subscription 1 and 2
-            users = np.hstack((await fear_and_greed_service.get_users_list(1), await fear_and_greed_service.get_users_list(2)))
-            user_emails = await crud.get_email_by_ids(users)
+            user_emails = np.hstack((await crud.get_email_by_ids(1), await crud.get_email_by_ids(2), await crud.get_email_by_ids(2)))
 
             # Send emails with users subscribed
             asyncio.gather(*[send_email(user, response2["subject"], response2["headline"], response2["description"], ["https://alternative.me/crypto/fear-and-greed-index.png"]) for user in user_emails])
@@ -109,8 +108,7 @@ async def fear_greed_job():
             response3["headline"] = response3["headline"] + f" - Notification with medium importance"  
 
             # Get user with subscription 1, 2 and 3
-            users = np.hstack((await fear_and_greed_service.get_users_list(1), await fear_and_greed_service.get_users_list(2), await fear_and_greed_service.get_users_list(3)))
-            user_emails = await crud.get_email_by_ids(users)
+            user_emails = np.hstack((await crud.get_email_by_ids(1), await crud.get_email_by_ids(2), await crud.get_email_by_ids(1)))
 
             # Send email with users subscribed
             asyncio.gather(*[send_email(user, response3["subject"], response3["headline"], response3["description"], ["https://alternative.me/crypto/fear-and-greed-index.png"]) for user in user_emails])

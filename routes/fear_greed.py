@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, responses
 from services.fear_greed.fear_greed_bot import Fear_Greed_Index
 from services.fear_greed.bot import fear_greed_job
+from services.database import crud
+import uuid
 from typing import Literal
 import docker
 
@@ -23,14 +25,19 @@ async def see_status():
 
     return {"description": description, "status": conf_status, "bot_id": bot_id}
 
-@router.post("/suscribe/{user_id}/{level}", description="Suscribe a new user to recive notification through email")
-async def suscribe_new_user(user_id: str, level: Literal["1", "2", "3"]):
+@router.post("/suscribe/{user_id}/{level}", description="Suscribe or update a user in ")
+async def suscribe_new_user(user_id: uuid.UUID, level):
     try:
-        await fear_greed.add_new_subscriber(user_id=user_id, level=level)
+        result = await crud.fear_greed_add_new_subscriber(user_id=user_id, level=int(level))
 
-        return {"status": "success", "message": "new user subscribed sucessfully"}
+        return result
     except ValueError:
         return {"status": "error", "message": f"level {level} does not exsit!"}
+
+@router.delete("/unsubscribe/{user_id}", description="Unsubscribe a user of fear and greed service")
+async def unsubscribe_user(user_id: uuid.UUID):
+    result = await crud.fear_greed_delete_subscriber(user_id=user_id)
+    return result
 
 @router.delete("/stop", description="Stop fear and greed bot")
 async def stop_fear_and_greed_bot():

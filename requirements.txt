@@ -2,6 +2,7 @@ fastapi
 uvicorn
 requests
 aiohttp
+aiofiles
 boto3
 pandas
 numpy
@@ -12,3 +13,8 @@ docker
 openai
 bs4
 lxml
+alembic
+selenium
+webdriver-manager
+psycopg2
+investpy
