@@ -42,13 +42,24 @@ async def unsubscribe_user(user_id: uuid.UUID):
 @router.put("/run", description="Start fear and greed bot")
 async def run_fear_and_greed_bot():
     response = await fear_greed.run_fear_and_greed_bot()
-    return responses.JSONResponse(response, status_code=200 if response['success'] else 400 if response['error'] else 304)
+    if 'success' in response:
+        return responses.JSONResponse(response, status_code=200)
+    elif 'error' in response:
+        return responses.JSONResponse(response, status_code=400)
+    else:
+        return responses.JSONResponse(response, status_code=304)
 
 
 @router.delete("/stop", description="Stop fear and greed bot")
 async def stop_fear_and_greed_bot():
     response = await fear_greed.stop_fear_and_greed_bot()
-    return responses.JSONResponse(response, status_code=200 if response['success'] else 400 if response['error'] else 304)
+    if 'success' in response:
+        return responses.JSONResponse(response, status_code=200)
+    elif 'error' in response:
+        return responses.JSONResponse(response, status_code=400)
+    else:
+        return responses.JSONResponse(response, status_code=304)
+
 
 @router.patch("/restart", description="Restart Fear And Greed bot")
 async def restart_fear_and_greed_bot():

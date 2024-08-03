@@ -8,7 +8,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install the dependencies specified in requirements.txt
-RUN pip install --no-cache-dir fastapi uvicorn requests aiohttp boto3 pandas numpy sqlalchemy asyncpg python-dotenv docker openai bs4 lxml
+RUN pip install --no-cache-dir fastapi uvicorn requests aiohttp aiofiles boto3 pandas numpy sqlalchemy asyncpg python-dotenv docker openai bs4 lxml alembic selenium webdriver-manager psycopg2 investpy webdriver_manager
 
 # Copy the rest of the application code into the container
 COPY . .
