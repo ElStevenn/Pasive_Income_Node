@@ -49,7 +49,7 @@ class Fear_Greed_Index:
             range(80, 101): 'Extreme Greed'
         }
         self.last_notified_value = None
-        
+        self._server_ip = f"http://{os.system('curl ifconfig.me')}"
 
     def classify_value(self, value):
         for key in self.value_classification:
@@ -115,7 +115,7 @@ class Fear_Greed_Index:
    
             private_url = "http://18.116.72.135:8000/schedule_limited_interval"
             data = {
-                "url": "http://0.0.0.0:8000/fear_greed/run_bot",
+                "url": self._server_ip + "/fear_greed/run_bot",
                 "method": "patch",
                 "data": {},
                 "headers": {},
@@ -128,9 +128,11 @@ class Fear_Greed_Index:
                     if result['error']:
                         print("Something was wrong while executing the bot")
                         await self.notify_error("Error while executing bot", result['message'])
+                        await self.set_conf_bot_id("")
                         return {"status":"error", "message":f"Something was wrong while executing the bot: {result['message']}"}
                     else:
                         await self.set_conf_status("running")
+                        await self.set_conf_bot_id(result['task_id'])
                         return {"status":"success", "message":"Sweet, bot is running successfully"}
         except Exception as e:
             return {"status":"error","message": f"You are executting this in a local machine: {e}"}
